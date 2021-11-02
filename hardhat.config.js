@@ -1,3 +1,8 @@
+require('dotenv').config();
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const API_URL = process.env.API_URL;
+const TESTNET_API_URL = process.env.TESTNET_API_URL;
+
 require("@nomiclabs/hardhat-waffle");
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -17,5 +22,21 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
+ defaultNetwork: "hardhat",
+  networks: {
+    hardhat: {
+    },
+    mumbai: {
+     // url: "https://rpc-mumbai.matic.today",
+      url: TESTNET_API_URL,
+      accounts: [`0x${PRIVATE_KEY}`],
+    },
+    matic: {
+      //url: "https://rpc-mainnet.maticvigil.com",
+      // url: "https://rpc-mainnet.matic.network", 
+     url: API_URL,
+      accounts: [`0x${PRIVATE_KEY}`],
+    }
+  },
   solidity: "0.8.4",
 };
